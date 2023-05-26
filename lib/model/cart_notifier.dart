@@ -98,13 +98,14 @@ class CartNotifier extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void subtest(Product product, int quantity) {
-
+  void subtest(Product product) {
     //if(cartItem.where((element) => false))
     //if(totalCartItems==0)return;
-    if(totalCartItems>=1)
-    totalCartItems--;
+    //  if (totalCartItems >= 1) totalCartItems--;
 
+    for (var r in cartItems) {
+      if (r.product.id == product.id && r.quantity >= 1) totalCartItems--;
+    }
     bool isPresent = false;
 
     cartItems.forEach(
@@ -126,29 +127,39 @@ class CartNotifier extends ChangeNotifier {
               element.quantity--;
               return;
             } else {
-              var newItems = cartItems.where((element) => element.product.id!=product.id).toList();
-              cartItems= newItems;
+              var newItems = cartItems
+                  .where((element) => element.product.id != product.id)
+                  .toList();
+              cartItems = newItems;
             }
           }
         },
       );
     }
-  //  totalCArtItemsCounter();
+    //  totalCArtItemsCounter();
     notifyListeners();
   }
 
   void delete(Product product) {
-   
-    
-    for (var e in cartItems) {
-      if (e.product.id == product.id) {
-totalCartItems-=e.quantity;
-        e.quantity = 0;
-             var newItems = cartItems.where((element) => element.product.id!=product.id).toList();
-              cartItems= newItems;
+    List<Cart> newItems = [];
+
+    cartItems.forEach((elem) {
+      if (elem.product.id == product.id) {
+        totalCartItems -= elem.quantity;
+      } else {
+        newItems.add(elem);
       }
-    }
-   // totalCArtItemsCounter();
+      cartItems = newItems;
+    });
+
+    // for (var e in cartItems) {
+    //   if (e.product.id == product.id) {
+
+    //     e.quantity = 0;
+
+    //   }
+    // }
+    // totalCArtItemsCounter();
     notifyListeners();
   }
 

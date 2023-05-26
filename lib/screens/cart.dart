@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:shopping_cart2/model/cart_notifier.dart';
-import 'package:shopping_cart2/model/product.dart';
 import 'package:shopping_cart2/screens/billscreen.dart';
 
 class CartScreen extends StatelessWidget {
@@ -50,7 +49,7 @@ class CartScreen extends StatelessWidget {
                   width: 20,
                 ),
                 ElevatedButton(
-                  onPressed: () => obj.subtest(obj.cartItems[index].product, 1),
+                  onPressed: () => obj.subtest(obj.cartItems[index].product),
                   child: const Icon(Icons.remove),
                 ),
                 ElevatedButton(
